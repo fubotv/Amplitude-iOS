@@ -1,5 +1,31 @@
 ## Unreleased
 
+## 4.6.0 (March 1, 2019)
+
+* Add support for installing on tvOS platform via Carthage
+* Do not use IDFV or IDFA for device ID if disabled via tracking options
+* Close Sqlite DB object even if open fails
+* Made `startOrContinueSession` public method. Only call this if you know what you are doing. This may trigger a new session to start.
+* Properly end background event flush task
+* Increased minimum iOS deployment target to 8.0
+
+
+## 4.5.0 (December 18, 2018)
+
+* Add ability to set a custom server URL for uploading events using `setServerUrl`.
+
+## 4.4.0 (October 15, 2018)
+
+* Add ability to set group properties via a new `groupIdentifyWithGroupType` method that takes in an `AMPIdentify` object as well as a group type and group name.
+
+## 4.3.1 (August 14, 2018)
+
+* Update SDK to better handle SQLite Exceptions.
+
+## 4.3.0 (July 24, 2018)
+
+* Add `AMPTrackingOptions` interface to customize the automatic tracking of user properties in the SDK (such as language, ip_address, platform, etc). See [Help Center Documentation](https://amplitude.zendesk.com/hc/en-us/articles/115002278527#disable-automatic-tracking-of-properties) for instructions on setting up this configuration.
+
 ## 4.2.1 (May 21, 2018)
 
 * Fix a bunch of compiler warnings

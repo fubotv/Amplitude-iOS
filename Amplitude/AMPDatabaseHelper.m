@@ -34,6 +34,7 @@
     BOOL _databaseCreated;
     sqlite3 *_database;
     dispatch_queue_t _queue;
+    void (^_databaseResetListener)(void);
 }
 
 static NSString *const QUEUE_NAME = @"com.amplitude.db.queue";
@@ -118,6 +119,7 @@ static NSString *const GET_VALUE = @"SELECT %@, %@ FROM %@ WHERE %@ = ?;";
         if (![instanceName isEqualToString:kAMPDefaultInstance]) {
             databasePath = [NSString stringWithFormat:@"%@_%@", databasePath, instanceName];
         }
+        _callResetListenerOnDatabaseReset = YES;
         _databasePath = SAFE_ARC_RETAIN(databasePath);
         _queue = dispatch_queue_create([QUEUE_NAME UTF8String], NULL);
         dispatch_queue_set_specific(_queue, kDispatchQueueKey, (__bridge void *)self, NULL);
@@ -134,6 +136,10 @@ static NSString *const GET_VALUE = @"SELECT %@, %@ FROM %@ WHERE %@ = ?;";
     if (_queue) {
         (void) SAFE_ARC_DISPATCH_RELEASE(_queue);
         _queue = NULL;
+    }
+    if (_databaseResetListener) {
+        SAFE_ARC_RELEASE(_databaseResetListener);
+        _databaseResetListener = NULL;
     }
     SAFE_ARC_SUPER_DEALLOC();
 }
@@ -157,6 +163,7 @@ static NSString *const GET_VALUE = @"SELECT %@, %@ FROM %@ WHERE %@ = ?;";
     dispatch_sync(_queue, ^() {
         if (sqlite3_open([self->_databasePath UTF8String], &self->_database) != SQLITE_OK) {
             NSLog(@"Failed to open database");
+            sqlite3_close(self->_database);
             success = NO;
             return;
         }
@@ -165,6 +172,17 @@ static NSString *const GET_VALUE = @"SELECT %@, %@ FROM %@ WHERE %@ = ?;";
     });
 
     return success;
+}
+
+- (void)setDatabaseResetListener: (void (^)(void)) listener
+{
+    if (listener == nil) {
+        SAFE_ARC_RELEASE(_databaseResetListener);
+        return;
+    }
+    id copy = [listener copy];
+    SAFE_ARC_RELEASE(_databaseResetListener);
+    _databaseResetListener = SAFE_ARC_RETAIN(copy);
 }
 
 /**
@@ -187,6 +205,7 @@ static NSString *const GET_VALUE = @"SELECT %@, %@ FROM %@ WHERE %@ = ?;";
     dispatch_sync(_queue, ^() {
         if (sqlite3_open([self->_databasePath UTF8String], &self->_database) != SQLITE_OK) {
             NSLog(@"Failed to open database");
+            sqlite3_close(self->_database);
             success = NO;
             return;
         }
@@ -305,6 +324,12 @@ static NSString *const GET_VALUE = @"SELECT %@, %@ FROM %@ WHERE %@ = ?;";
         success &= [self dropTables];
     }
     success &= [self createTables];
+
+    if (_databaseResetListener && _callResetListenerOnDatabaseReset) {
+        _callResetListenerOnDatabaseReset = NO;
+        _databaseResetListener();
+        _callResetListenerOnDatabaseReset = YES;
+    }
 
     return success;
 }
