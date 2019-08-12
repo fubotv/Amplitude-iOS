@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
-  s.name                   = "Amplitude-iOS"
-  s.version                = "4.6.0"
-  s.summary                = "Amplitude mobile analytics iOS SDK."
+  s.name                   = "Amplitude-tvOS"
+  s.version                = "4.6.1-fubo"
+  s.summary                = "Amplitude mobile analytics tvOS SDK with Fubo Fixes."
   s.homepage               = "https://amplitude.com"
   s.license                = { :type => "MIT" }
   s.author                 = { "Amplitude" => "dev@amplitude.com" }

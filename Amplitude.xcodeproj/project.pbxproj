@@ -160,6 +160,7 @@
 		343AB4191CC99F4F00962943 /* AmplitudeFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AmplitudeFramework.h; sourceTree = "<group>"; };
 		343AB41B1CC99F4F00962943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37802BF31E86AF65003E5A8B /* Amplitude.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Amplitude.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		47B166152301D1AC00CEC359 /* Amplitude-Segment-tvOS.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Amplitude-Segment-tvOS.podspec"; sourceTree = "<group>"; };
 		59E837BC70064214FD8C88C1 /* Pods-AmplitudeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmplitudeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AmplitudeTests/Pods-AmplitudeTests.release.xcconfig"; sourceTree = "<group>"; };
 		600CBC5C1E2EF5B0001F58A9 /* AmplitudeTVOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmplitudeTVOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		600CBC631E2EF5B0001F58A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -323,6 +324,7 @@
 		E98C051A1A48E7FE00800C63 = {
 			isa = PBXGroup;
 			children = (
+				47B166152301D1AC00CEC359 /* Amplitude-Segment-tvOS.podspec */,
 				E98C05251A48E7FE00800C63 /* Amplitude */,
 				E98C052F1A48E7FE00800C63 /* AmplitudeTests */,
 				343AB4181CC99F4F00962943 /* AmplitudeFramework */,
@@ -584,6 +586,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = E98C051A1A48E7FE00800C63;
